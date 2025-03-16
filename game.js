@@ -131,6 +131,7 @@ class Game {
         this.level = 1;
         this.gameOver = false;
         this.dropInterval = 1000;
+        this.lastDrop = performance.now();
         this.updateScore();
         this.updateLevel();
         
@@ -138,7 +139,7 @@ class Game {
         document.getElementById('gameOverScreen').classList.add('hidden');
         
         this.spawnPiece();
-        this.gameLoop();
+        requestAnimationFrame((timestamp) => this.gameLoop(timestamp));
     }
     
     spawnPiece() {
@@ -411,7 +412,7 @@ class Game {
         }
     }
     
-    gameLoop(timestamp = 0) {
+    gameLoop(timestamp) {
         if (this.gameOver) {
             return;
         }
